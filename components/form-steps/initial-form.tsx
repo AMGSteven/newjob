@@ -179,7 +179,7 @@ export function InitialForm({ onNext }: InitialFormProps) {
   return (
     <div className="max-w-md mx-auto">
       <div className="absolute top-2 left-4">
-        <Logo width={150} height={50} />
+        <Logo width={100} height={45} />
       </div>
 
       {isReturningUser && (
