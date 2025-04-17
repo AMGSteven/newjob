@@ -27,7 +27,6 @@ export function InitialForm({ onNext }: InitialFormProps) {
     useFormContext()
 
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [tcpaConsent, setTcpaConsent] = useState(true)
   const [isReturningUser, setIsReturningUser] = useState(false)
   const [tcpaText, setTcpaText] = useState("")
   const [showContinuationOptions, setShowContinuationOptions] = useState(false)
@@ -86,6 +85,7 @@ export function InitialForm({ onNext }: InitialFormProps) {
     }
   }
 
+  // Update the validateForm function to remove the tcpaConsent check
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
 
@@ -115,20 +115,17 @@ export function InitialForm({ onNext }: InitialFormProps) {
       newErrors.zipCode = "ZIP code is invalid"
     }
 
-    if (!tcpaConsent) {
-      newErrors.tcpaConsent = "You must agree to the terms"
-    }
-
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
+  // Update the handleSubmit function to set tcpaConsent to true automatically
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
     if (validateForm()) {
-      // Save TCPA consent
-      updateFormData({ tcpaConsent })
+      // Save TCPA consent (always true now)
+      updateFormData({ tcpaConsent: true })
 
       // Log consent with compliance service
       logConsent("initial_form_submit", tcpaText)
@@ -364,26 +361,9 @@ export function InitialForm({ onNext }: InitialFormProps) {
             {errors.zipCode && <p className="mt-1 text-sm text-red-600">{errors.zipCode}</p>}
           </div>
 
-          <div className="flex items-start mt-4">
-            <div className="flex items-center h-5">
-              <input
-                id="tcpaConsent"
-                name="tcpaConsent"
-                type="checkbox"
-                checked={tcpaConsent}
-                onChange={() => setTcpaConsent(!tcpaConsent)}
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-            </div>
-            <div className="ml-3 text-sm">
-              <label
-                htmlFor="tcpaConsent"
-                className={`font-medium ${errors.tcpaConsent ? "text-red-600" : "text-gray-500"}`}
-              >
-                {tcpaText}
-              </label>
-              {errors.tcpaConsent && <p className="mt-1 text-sm text-red-600">{errors.tcpaConsent}</p>}
-            </div>
+          {/* Replace the checkbox with just the TCPA text */}
+          <div className="mt-4">
+            <p className="text-xs text-gray-500">{tcpaText}</p>
           </div>
 
           <button

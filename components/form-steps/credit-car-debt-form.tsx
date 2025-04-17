@@ -66,6 +66,13 @@ export function CreditCardDebtForm({ onNext, onBack }: CreditCardDebtFormProps) 
     const { name, value, type } = e.target
 
     let processedValue = value
+    if (type === "number") {
+      processedValue = value // Keep as string instead of converting to Number
+    }
+
+    updateFormData({ [name]: processedValue })
+    saveFieldProgress(name, processedValue)
+
     // Clear error when user types
     if (errors[name]) {
       setErrors((prev) => {
@@ -74,9 +81,6 @@ export function CreditCardDebtForm({ onNext, onBack }: CreditCardDebtFormProps) 
         return newErrors
       })
     }
-
-    updateFormData({ [name]: processedValue })
-    saveFieldProgress(name, processedValue)
   }
 
   const handleDebtResponse = (hasDebt: boolean) => {

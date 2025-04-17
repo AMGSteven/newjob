@@ -62,30 +62,8 @@ export class ComplianceService {
 
   // Get dynamic TCPA language based on user location
   public getTcpaLanguage(): string {
-    // Base TCPA language
-    let tcpaText =
-      "By submitting, I agree to receive telemarketing calls and text messages via automated technology from JobResourceCenter and its marketing partners at the phone number provided. I understand this consent is not a condition of purchase. Msg & data rates may apply. Reply STOP to cancel. View our Privacy Policy."
-
-    // Add state-specific language if available
-    if (this.userLocation?.region) {
-      switch (this.userLocation.region) {
-        case "CA":
-          tcpaText += " CA residents: See our CA Privacy Notice for additional rights."
-          break
-        case "NV":
-          tcpaText += " Under Nevada law, you may opt out of the sale of your personal information."
-          break
-        case "VA":
-        case "CT":
-        case "CO":
-          tcpaText += " Residents of VA, CT, and CO have additional privacy rights under state law."
-          break
-        default:
-          break
-      }
-    }
-
-    return tcpaText
+    // Return the new TCPA language
+    return 'By clicking the "Get My Free Guide" button, you are providing your electronic signature in which you consent, acknowledge, and agree to: (a) our Terms of Service and Privacy Policy, including the arbitration provision; (b) the sharing of your information with Juiced Media and marketing partners for marketing purposes; (c) to receive automated calls, texts, and pre-recorded marketing messages from Juiced Media about various offers at the number provided (consent not required for purchase); and (d) your call being handled by a virtual assistant powered by a third-party AI tool. Message/data rates may apply. Reply STOP to opt out or email compliance@juicedmedia.io to revoke consent.'
   }
 
   // Log consent with all required data
