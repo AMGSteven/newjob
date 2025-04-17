@@ -47,9 +47,10 @@ export function CreditCardDebtForm({ onNext, onBack }: CreditCardDebtFormProps) 
     const { name, value, type } = e.target
 
     let processedValue = value
-    if (type === "number") {
-      processedValue = Number(value)
-    }
+    // Remove the type conversion since it causes a type error
+    // if (type === "number") {
+    //   processedValue = Number(value)
+    // }
 
     updateFormData({ [name]: processedValue })
     saveFieldProgress(name, processedValue)
